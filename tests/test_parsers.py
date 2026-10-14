@@ -84,7 +84,7 @@ def test_jsonl_parser_invalid_date_raises_and_without_skip(tmp_path):
 
 
 def test_jsonl_parser_invalid_date_raises_and_skip(tmp_path):
-    """Невалидная дата выбрасывает SteamStatsError"""
+    """Невалидная дата с включенным skip_invalid"""
     invalid_date_jsonl = (
         '{"timestamp": "2024-13-45T99:99:99", "level": "INFO", '
         '"source": "test1", "message": "да"}'
