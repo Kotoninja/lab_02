@@ -29,7 +29,7 @@ def create_event(data: dict) -> Event:
         raise errors.InvalidEventError(f"Неизвестный level {level}")
 
     source = data["source"]
-    if not isinstance(source, str) and not len(source.rstrip()):
+    if not isinstance(source, str) or not len(source.rstrip()):
         raise errors.InvalidEventError("Source должен быть не пустой строкой")
 
     message = data["message"]
