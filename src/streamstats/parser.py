@@ -33,7 +33,11 @@ def json_parser(f: Path, skip_invalid: bool, stats: Stats) -> Iterator[Event]:
 
                 try:
                     data = json.loads(line)
-                except json.JSONDecodeError:
+                except json.JSONDecodeError as e:
+                    if skip_invalid:
+                        stats.skipped += 1
+                        continue
+                    log(f, number, e)
                     raise errors.InvalidEventError(f"Невалидный json. Line {number}")
 
                 try:
@@ -44,7 +48,6 @@ def json_parser(f: Path, skip_invalid: bool, stats: Stats) -> Iterator[Event]:
                         continue
                     log(f, number, e)
                     raise
-
     except FileNotFoundError:
         raise FileNotFoundError(f"Файл не найден: {f}")
 

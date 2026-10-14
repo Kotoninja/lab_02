@@ -12,7 +12,7 @@ def service(args):
     stats = Stats()
 
     data_parser = get_parser(args.format)
-    for path in args.input:
+    for path in set(args.input):
         for event in data_parser(path, args.skip_invalid, stats):
             stats.add(event)
 
@@ -65,6 +65,6 @@ if __name__ == "__main__":
         args.func(args)
         sys.stdout.write("\n")
         sys.exit(0)
-    except errors.SteamStatsError as e:
+    except (errors.SteamStatsError, FileNotFoundError) as e:
         sys.stderr.write(f"\033[31mError: {e}\033[0m\n")
         sys.exit(2)
