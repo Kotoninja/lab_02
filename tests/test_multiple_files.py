@@ -11,7 +11,6 @@ from .test_parsers import (
 
 
 def test_multiple_json(tmp_path):
-    """Обработка нескольких json файлов"""
     f1 = create_json_file(tmp_path, [VALID_JSONL_1, VALID_JSONL_2])
     f2 = create_json_file(tmp_path, [VALID_JSONL_1, VALID_JSONL_2])
     stats = analysis.Stats()
@@ -24,7 +23,6 @@ def test_multiple_json(tmp_path):
 
 
 def test_multiple_csv(tmp_path):
-    """Обработка нескольких csv файлов"""
     f1 = create_csv_file(tmp_path, [VALID_CSV_1, VALID_CSV_2])
     f2 = create_csv_file(tmp_path, [VALID_CSV_1, VALID_CSV_2])
     stats = analysis.Stats()
