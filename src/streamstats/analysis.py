@@ -29,5 +29,7 @@ class Stats:
     ):
         return [
             {"source": source, "count": self.top_error[source]}
-            for source in sorted(self.top_error, reverse=True)
-        ]
+            for source in sorted(
+                self.top_error, reverse=True, key=lambda x: self.top_error[x]
+            )
+        ][:5]
