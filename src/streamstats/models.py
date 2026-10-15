@@ -15,6 +15,9 @@ class Event:
 
 
 def create_event(data: dict) -> Event:
+    if not isinstance(data, dict):
+        raise errors.InvalidEventError("Невалидное событие")
+
     for field in ["timestamp", "level", "source", "message"]:
         if field not in data:
             raise errors.InvalidEventError(f"Недопустипое поле {field}")
