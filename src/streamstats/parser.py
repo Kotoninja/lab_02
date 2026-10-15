@@ -42,7 +42,7 @@ def json_parser(f: Path, skip_invalid: bool, stats: Stats) -> Iterator[Event]:
 
                 try:
                     yield create_event(data)
-                except errors.SteamStatsError as e:
+                except errors.StreamStatsError as e:
                     if skip_invalid:
                         stats.skipped += 1
                         continue
@@ -59,7 +59,7 @@ def csv_parser(f: Path, skip_invalid: bool, stats) -> Iterator[Event]:
             for number, line in enumerate(reader, start=2):
                 try:
                     yield create_event(line)
-                except errors.SteamStatsError as e:
+                except errors.StreamStatsError as e:
                     if skip_invalid:
                         stats.skipped += 1
                         continue

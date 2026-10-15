@@ -1,26 +1,26 @@
-class SteamStatsError(Exception):
+class StreamStatsError(Exception):
     """Базовая ошибка SteamStats"""
 
 
-class UnsupportedFormatError(SteamStatsError):
+class UnsupportedFormatError(StreamStatsError):
     """Неподдерживаемый формат"""
 
     def __init__(self, field):
         super().__init__(f"Неподдерживаемый формат {field}")
 
 
-class InvalidEventError(SteamStatsError):
+class InvalidEventError(StreamStatsError):
     """Неверное событие"""
 
 
-class InvalidTimestampError(SteamStatsError):
+class InvalidTimestampError(StreamStatsError):
     """Неверная временная метка"""
 
     def __init__(self):
         super().__init__("Неверная временная метка")
 
 
-class CLIConfigurationError(SteamStatsError):
+class CLIConfigurationError(StreamStatsError):
     """Ошибка конфигурации CLI"""
 
     def __init__(self):

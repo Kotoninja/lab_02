@@ -65,6 +65,6 @@ if __name__ == "__main__":
         args.func(args)
         sys.stdout.write("\n")
         sys.exit(0)
-    except (errors.SteamStatsError, FileNotFoundError) as e:
+    except (errors.StreamStatsError, FileNotFoundError) as e:
         sys.stderr.write(f"\033[31mError: {e}\033[0m\n")
         sys.exit(2)

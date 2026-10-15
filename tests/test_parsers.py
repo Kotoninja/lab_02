@@ -75,7 +75,7 @@ def test_jsonl_parser_invalid_date_raises_and_without_skip(tmp_path):
     f = create_json_file(tmp_path, [invalid_date_jsonl])
 
     stats = analysis.Stats()
-    with pytest.raises(errors.SteamStatsError):
+    with pytest.raises(errors.StreamStatsError):
         list(parser.json_parser(f, skip_invalid=False, stats=stats))
 
 
@@ -130,7 +130,7 @@ def test_csv_parser_invalid_raises(tmp_path):
     f = create_csv_file(tmp_path, [invalid_csv])
 
     stats = analysis.Stats()
-    with pytest.raises(errors.SteamStatsError):
+    with pytest.raises(errors.StreamStatsError):
         list(parser.csv_parser(f, skip_invalid=False, stats=stats))
 
 
