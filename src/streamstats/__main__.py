@@ -41,7 +41,6 @@ def create_parser() -> argparse.ArgumentParser:
     )
     analyze_parser.add_argument(
         "--format",
-        nargs="?",
         choices=["csv", "jsonl"],
         required=True,
         help="формат указанных файлов",
