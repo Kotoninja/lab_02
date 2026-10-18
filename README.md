@@ -1,6 +1,6 @@
 # Лабораторная работа №2 — streamstats
 
-**streamstats** — консольное приложение для анализа потока событий (логов) из файлов в форматах CSV и JSONL.
+**streamstats** — консольное приложение для анализа потока событий из файлов в форматах CSV и JSONL.
 Приложение читает файлы, собирает статистику и сохраняет отчёт в JSON.
 
 ## Формат входных данных
@@ -9,8 +9,8 @@
 
 timestamp : str - время события в формате ISO 8601, например 2024-01-01T10:00:00  
 level: str - `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`  
-source: str - источник события, непустая строка
-message: str - Текст сообщения                                             |
+source: str - источник события, непустая строка  
+message: str - текст сообщения
 
 JSON Lines — один JSON-объект на строку:
 
@@ -23,8 +23,8 @@ CSV — первая строка содержит заголовок:
 
 ```csv
 timestamp,level,source,message
-2024-01-01T10:00:00,INFO,auth,login ok
-2024-01-01T10:05:00,ERROR,db,connection lost
+2024-01-01T10:00:00,INFO,test1,ok
+2024-01-01T10:05:00,ERROR,test2,not ok
 ```
 
 ## Установка
@@ -38,8 +38,6 @@ cd lab_02/src
 echo '{"timestamp": "2023-04-12T12:34:56Z", "level": "ERROR", "source": "привет", "message": "This is a debug message"}' > test.jsonl
 
 uv sync
-
-uv run python -m streamstats analyze test1.jsonl --format jsonl --output Report.json
 
 source .venv/bin/activate
 
@@ -64,7 +62,7 @@ uv run python -m src.streamstats analyze <файл> [<файл> ...] --format {c
 Пример:
 
 ```bash
-python -m src.streamstats analyze logs/app1.jsonl logs/app2.jsonl --format jsonl --output report.json --skip-invalid
+python -m src.streamstats analyze app1.jsonl app2.jsonl --format jsonl --output report.json --skip-invalid
 ```
 
 ## Формат отчёта
@@ -97,20 +95,20 @@ python -m src.streamstats analyze logs/app1.jsonl logs/app2.jsonl --format jsonl
 .
 ├── src/
 │   └── streamstats/
-│       ├── __main__.py        # Точка входа: CLI (argparse) и запуск анализа
-│       ├── parser.py          # Потоковые парсеры CSV и JSONL, выбор парсера по формату
+│       ├── __main__.py        # Точка входа. CLI и запуск анализа
+│       ├── parser.py          # Парсеры CSV и JSONL
 │       ├── models.py          # Модель Event и валидация входных данных
 │       ├── analysis.py        # Класс Stats — накопление статистики по событиям
 │       ├── report.py          # Формирование и запись JSON-отчёта
-│       └── errors.py          # Иерархия исключений приложения
+│       └── errors.py          # Исключения приложения
 ├── tests/
-│   ├── test_models.py         # Валидация событий
-│   ├── test_parsers.py        # Парсеры CSV/JSONL, пропуск невалидных строк, ошибки
-│   ├── test_multiple_files.py # Обработка нескольких файлов
-│   └── test_unicode.py        # Поддержка Unicode
+│   ├── test_models.py         # Проверка валидации событий
+│   ├── test_parsers.py        # Проверка парсеров CSV/JSONL, пропуск невалидных строк, ошибки
+│   ├── test_multiple_files.py # Проверка обработки нескольких файлов
+│   └── test_unicode.py        # Проверка Unicode
 ├── pyproject.toml             # Метаданные проекта и настройки coverage
-├── uv.lock                    # Зафиксированные зависимости
-├── .pre-commit-config.yaml    # Хуки pre-commit: mypy, ruff, проверки файлов
+├── uv.lock                    # Зависимости проекта
+├── .pre-commit-config.yaml
 └── README.md
 </pre>
 
@@ -118,10 +116,10 @@ python -m src.streamstats analyze logs/app1.jsonl logs/app2.jsonl --format jsonl
 ## Исключения (`errors.py`):
 
 `StreamStatsError` — базовое исключение  
-`InvalidEventError` — некорректное событие или невалидный JSON
-`InvalidTimestampError` — некорректная временная метка
-`UnsupportedFormatError` — неподдерживаемый формат
-`CLIConfigurationError` — ошибка конфигурации CLI
+`InvalidEventError` — некорректное   событие или невалидный JSON  
+`InvalidTimestampError` — некорректная временная метка  
+`UnsupportedFormatError` — неподдерживаемый формат  
+`CLIConfigurationError` — ошибка конфигурации CLI  
 
 ## Тестирование
 

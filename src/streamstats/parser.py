@@ -19,10 +19,12 @@ logger = logging.getLogger(__name__)
 
 
 def log(file, line, error):
+    """Логирование"""
     logger.warning(f"file '{file}' line {line}: {error}")
 
 
 def json_parser(f: Path, skip_invalid: bool, stats: Stats) -> Iterator[Event]:
+    """Чтение json файла"""
     try:
         with f.open("r", encoding="utf-8") as file:
             for number, line in enumerate(file, start=1):
@@ -53,6 +55,7 @@ def json_parser(f: Path, skip_invalid: bool, stats: Stats) -> Iterator[Event]:
 
 
 def csv_parser(f: Path, skip_invalid: bool, stats) -> Iterator[Event]:
+    """Чтение csv файла"""
     try:
         with f.open("r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
@@ -70,6 +73,7 @@ def csv_parser(f: Path, skip_invalid: bool, stats) -> Iterator[Event]:
 
 
 def get_parser(format: str):
+    """Получить парсер в зависимости от формата"""
     match format:
         case "jsonl":
             data_parser = json_parser

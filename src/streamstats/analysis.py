@@ -5,6 +5,7 @@ from .models import Event
 
 class Stats:
     def __init__(self):
+        """Инициализация статистики """
         self.total_events: int = 0
         self.by_level: dict[str, int] = {}
         self.by_source: dict[str, int] = {}
@@ -14,6 +15,7 @@ class Stats:
         self.skipped: int = 0
 
     def add(self, event: Event):
+        """Добавление новой статистики"""
         self.total_events += 1
         self.by_level[event.level] = self.by_level.get(event.level, 0) + 1
         self.by_source[event.source] = self.by_source.get(event.source, 0) + 1
@@ -27,6 +29,7 @@ class Stats:
     def get_top_five(
         self,
     ):
+        """Получение новой статистики"""
         return [
             {"source": source, "count": self.top_error[source]}
             for source in sorted(

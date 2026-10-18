@@ -6,6 +6,7 @@ from .analysis import Stats
 
 
 def get_data_for_report(stats: Stats) -> dict:
+    """Сформировать отчет по статистике"""
     top_five = stats.get_top_five()
     return {
         "total_events": stats.total_events,
@@ -23,6 +24,7 @@ def get_data_for_report(stats: Stats) -> dict:
 
 
 def create_report(path: Path, stats: Stats):
+    """Запись отчета в json"""
     data_report: dict = get_data_for_report(stats=stats)
 
     with path.open("w", encoding="utf-8") as file:

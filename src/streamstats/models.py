@@ -15,6 +15,7 @@ class Event:
 
 
 def create_event(data: dict) -> Event:
+    """Создание события"""
     if not isinstance(data, dict):
         raise errors.InvalidEventError("Невалидное событие")
 

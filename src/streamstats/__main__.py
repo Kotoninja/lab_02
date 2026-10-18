@@ -9,6 +9,7 @@ from .report import create_report
 
 
 def service(args):
+    """Выполняется вся логика"""
     stats = Stats()
 
     data_parser = get_parser(args.format)
@@ -20,37 +21,42 @@ def service(args):
 
 
 def create_parser() -> argparse.ArgumentParser:
-    """Generate main parser
-
-    Returns:
-        argparse.ArgumentParser: parser
-    """
+    """Создание парсера"""
     parser = argparse.ArgumentParser(
         prog="streamstats",
-        description="CLI app for analyze csv or json files",
+        description="CLI приложение для анализа csv или json файлов",
     )
     subparsers = parser.add_subparsers(required=True)
 
-    analyze_parser = subparsers.add_parser("analyze")
+    analyze_parser = subparsers.add_parser(
+        "analyze",
+        help="Анализ файлов",
+        description="Чтение нескольких файлов, их анализ и вывод статистики в формате JSON",
+    )
     analyze_parser.add_argument(
         "input",
         nargs="+",
         type=Path,
+        help="какие файлы нужно проанализировать",
     )
     analyze_parser.add_argument(
         "--format",
         nargs="?",
         choices=["csv", "jsonl"],
         required=True,
+        help="формат указанных файлов",
+
     )
     analyze_parser.add_argument(
         "--output",
         required=True,
         type=Path,
+        help="В какой файл нужно записать отчет",
     )
     analyze_parser.add_argument(
         "--skip-invalid",
         action="store_true",
+        help="Пропустить ошибки в файле",
     )
     analyze_parser.set_defaults(func=service)
 
@@ -58,6 +64,7 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 if __name__ == "__main__":
+    """Точка входа в приложение"""
     parser = create_parser()
 
     args = parser.parse_args()

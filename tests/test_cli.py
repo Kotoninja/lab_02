@@ -1,14 +1,12 @@
-import subprocess, sys, pytest
-from pathlib import Path
 import json
+import subprocess
 
 from .test_parsers import (
-    VALID_JSONL_1,
-    create_json_file,
-    create_csv_file,
     VALID_CSV_1,
-    VALID_CSV_2,
+    VALID_JSONL_1,
     VALID_JSONL_2,
+    create_csv_file,
+    create_json_file,
 )
 
 
