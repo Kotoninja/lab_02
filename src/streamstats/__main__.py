@@ -4,7 +4,7 @@ from pathlib import Path
 
 from . import errors
 from .analysis import Stats
-from .parser import get_parser
+from .parsers import get_parser
 from .report import create_report
 
 

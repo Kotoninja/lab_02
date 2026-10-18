@@ -1,4 +1,4 @@
-from src.streamstats import analysis, parser
+from src.streamstats import analysis, parsers
 
 from .test_parsers import (
     VALID_CSV_1,
@@ -16,7 +16,7 @@ def test_multiple_json(tmp_path):
     stats = analysis.Stats()
 
     for f in (f1, f2):
-        for event in parser.json_parser(f, skip_invalid=False, stats=stats):
+        for event in parsers.json_parser(f, skip_invalid=False, stats=stats):
             stats.add(event)
 
     assert stats.total_events == 4
@@ -28,7 +28,7 @@ def test_multiple_csv(tmp_path):
     stats = analysis.Stats()
 
     for f in (f1, f2):
-        for event in parser.csv_parser(f, skip_invalid=False, stats=stats):
+        for event in parsers.csv_parser(f, skip_invalid=False, stats=stats):
             stats.add(event)
 
     assert stats.total_events == 4

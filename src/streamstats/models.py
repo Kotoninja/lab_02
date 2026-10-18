@@ -24,12 +24,14 @@ def create_event(data: dict) -> Event:
             raise errors.InvalidEventError(f"Недопустипое поле {field}")
 
     try:
-        datetime.fromisoformat(data["timestamp"])
+        timestamp = datetime.fromisoformat(data["timestamp"])
+        if timestamp.tzinfo is None:
+            raise errors.InvalidTimestampError
     except (TypeError, ValueError):
         raise errors.InvalidTimestampError
 
     level = data["level"]
-    if isinstance(level, str) and level not in LEVELS_ENUM:
+    if not isinstance(level, str) or level not in LEVELS_ENUM:
         raise errors.InvalidEventError(f"Неизвестный level {level}")
 
     source = data["source"]

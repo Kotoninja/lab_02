@@ -64,3 +64,32 @@ def test_cli_csv(tmp_path):
 
     assert out_file.exists()
     assert report_data["total_events"] == 1
+
+
+def test_cli_empty_file(tmp_path):
+    in_file = create_json_file(tmp_path, [])
+    out_file = tmp_path / "report.json"
+
+    execute = subprocess.run(
+        [
+            "uv",
+            "run",
+            "python",
+            "-m",
+            "src.streamstats",
+            "analyze",
+            in_file,
+            "--format",
+            "jsonl",
+            "--output",
+            out_file,
+        ],
+        check=False,
+    )
+
+    assert execute.returncode == 0
+    report_data = json.loads(out_file.read_text())
+
+    assert out_file.exists()
+    assert report_data["total_events"] == 0
+    assert report_data["skipped_lines"] == 0
