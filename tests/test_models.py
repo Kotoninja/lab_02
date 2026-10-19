@@ -81,18 +81,6 @@ def test_invalid_timestamp():
         )
 
 
-def test_timestamp_without_timezone():
-    with pytest.raises(errors.InvalidTimestampError):
-        models.create_event(
-            {
-                "timestamp": "2024-01-01T10:00:00",
-                "level": "INFO",
-                "source": "test",
-                "message": "helloworld",
-            }
-        )
-
-
 def test_invalid_message():
     with pytest.raises(errors.InvalidEventError):
         models.create_event(
@@ -103,6 +91,7 @@ def test_invalid_message():
                 "message": 123,
             }
         )
+
 
 def test_invalid_source():
     with pytest.raises(errors.InvalidEventError):

@@ -24,9 +24,7 @@ def create_event(data: dict) -> Event:
             raise errors.InvalidEventError(f"Недопустипое поле {field}")
 
     try:
-        timestamp = datetime.fromisoformat(data["timestamp"])
-        if timestamp.tzinfo is None:
-            raise errors.InvalidTimestampError
+        datetime.fromisoformat(data["timestamp"])
     except (TypeError, ValueError):
         raise errors.InvalidTimestampError
 

@@ -5,7 +5,7 @@ from .models import Event
 
 class Stats:
     def __init__(self):
-        """Инициализация статистики """
+        """Инициализация статистики"""
         self.total_events: int = 0
         self.by_level: dict[str, int] = {}
         self.by_source: dict[str, int] = {}
@@ -21,15 +21,21 @@ class Stats:
         self.by_source[event.source] = self.by_source.get(event.source, 0) + 1
         if event.level in ("ERROR", "CRITICAL"):
             self.top_error[event.source] = self.top_error.get(event.source, 0) + 1
-        if self.first_timestamp is None or event.timestamp < self.first_timestamp:
-            self.first_timestamp = event.timestamp
-        if self.last_timestamp is None or event.timestamp > self.last_timestamp:
-            self.last_timestamp = event.timestamp
+        if (
+            self.first_timestamp is None
+            or event.timestamp.replace(tzinfo=None) < self.first_timestamp
+        ):
+            self.first_timestamp = event.timestamp.replace(tzinfo=None)
+        if (
+            self.last_timestamp is None
+            or event.timestamp.replace(tzinfo=None) > self.last_timestamp
+        ):
+            self.last_timestamp = event.timestamp.replace(tzinfo=None)
 
     def get_top_five(
         self,
-    ):
-        """Получение новой статистики"""
+    ) -> list[dict[str, int | str]]:
+        """Получение топ 5 по ошибкам"""
         return [
             {"source": source, "count": self.top_error[source]}
             for source in sorted(
